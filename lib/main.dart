@@ -50,3 +50,89 @@ class SignInHttpDemo extends StatefulWidget {
   @override
   State<SignInHttpDemo> createState() => _SignInHttpDemoState();
 }
+
+class _SignInHttpDemoState extends State<SignInHttpDemo> {
+  FormData formData = FormData();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Sign in Form'),
+      ),
+      body: Form(
+        child: Scrollbar(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
+                ...[
+                  TextFormField(
+                    autofocus: true,
+                    textInputAction: TextInputAction.next,
+                    decoration: const InputDecoration(
+                      filled: true,
+                      hintText: 'Your email address',
+                      labelText: 'Email',
+                    ),
+                    onChanged: (value) {
+                      formData.email = value;
+                    },
+                  ),
+                  TextFormField(
+                    decoration: const InputDecoration(
+                      filled: true,
+                      labelText: 'Password',
+                    ),
+                    obscureText: true,
+                    onChanged: (value) {
+                      formData.password = value;
+                    },
+                  ),
+                  TextButton(
+                    child: const Text('Sign in'),
+                    onPressed: () async {
+                      // Use a JSON encoded string to send
+                      var result = await widget.httpClient!
+                          .post(Uri.parse('https://example.com/signin'),
+                              // body: json.encode(formData.toJson()),
+                              headers: {'content-type': 'application/json'});
+
+                      _showDialog(switch (result.statusCode) {
+                        200 => 'Successfully signed in.',
+                        401 => 'Unable to sign in.',
+                        _ => 'Something went wrong. Please try again.'
+                      });
+                    },
+                  ),
+                ].expand(
+                  (widget) => [
+                    widget,
+                    const SizedBox(
+                      height: 24,
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showDialog(String message) {
+    showDialog<void>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(message),
+        actions: [
+          TextButton(
+            child: const Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      ),
+    );
+  }
+}
