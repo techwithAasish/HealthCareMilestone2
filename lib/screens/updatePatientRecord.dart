@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Patient {
+  String patientID = '';
   String firstName = '';
   String lastName = '';
   DateTime? dateOfBirth;
