@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:milestone2/screens/addPatientRecord.dart';
+import 'package:milestone2/screens/updatePatientRecord.dart';
+import 'package:milestone2/screens/viewPatientRecord.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -33,7 +35,7 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(height: 20),
             Image.asset(
-              'images/aa.png', // Replace with your image asset
+              'images/clinicalrecord.jpg', // Replace with your image asset
               height: 100,
               width: 100,
             ),
@@ -82,6 +84,11 @@ class PatientRecordScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UpdatePatientRecord()),
+                );
                 // Add functionality to update patient record
               },
               child: const Text('Update Patient Record'),
@@ -89,7 +96,11 @@ class PatientRecordScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Add functionality to update patient record
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => PatientInfoTableScreen()),
+                );
               },
               child: const Text('View Patient Record'),
             ),
