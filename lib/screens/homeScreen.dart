@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:milestone2/screens/addClinicalRecord.dart';
 import 'package:milestone2/screens/addPatientRecord.dart';
+import 'package:milestone2/screens/updateClinicalRecord.dart';
 import 'package:milestone2/screens/updatePatientRecord.dart';
 import 'package:milestone2/screens/viewClinicalRecord.dart';
 import 'package:milestone2/screens/viewPatientRecord.dart';
@@ -139,7 +140,11 @@ class ClinicalDataScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Add functionality to update patient record
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const UpdateClinicalRecord()),
+                );
               },
               child: const Text('Update Patient Clinical Record'),
             ),
