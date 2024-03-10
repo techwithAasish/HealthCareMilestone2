@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
-import 'package:milestone2/screens/addPatientRecord.dart';
+// import 'package:milestone2/screens/addPatientRecord.dart';
+import 'package:milestone2/screens/homeScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,8 +20,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        // home: const SignInHttpDemo(),
-        home: const AddPatientRecord());
+        home: const SignInHttpDemo());
+    // home: const AddPatientRecord());
   }
 }
 
@@ -94,16 +95,21 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                     child: const Text('Sign in'),
                     onPressed: () async {
                       // Use a JSON encoded string to send
-                      var result = await widget.httpClient!
-                          .post(Uri.parse('https://example.com/signin'),
-                              // body: json.encode(formData.toJson()),
-                              headers: {'content-type': 'application/json'});
+                      // var result = await widget.httpClient!
+                      //     .post(Uri.parse('https://example.com/signin'),
+                      //         // body: json.encode(formData.toJson()),
+                      //         headers: {'content-type': 'application/json'});
 
-                      _showDialog(switch (result.statusCode) {
-                        200 => 'Successfully signed in.',
-                        401 => 'Unable to sign in.',
-                        _ => 'Something went wrong. Please try again.'
-                      });
+                      // _showDialog(switch (result.statusCode) {
+                      //   200 => 'Successfully signed in.',
+                      //   401 => 'Unable to sign in.',
+                      //   _ => 'Something went wrong. Please try again.'
+                      // });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                      );
                     },
                   ),
                 ].expand(
@@ -122,18 +128,18 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
     );
   }
 
-  void _showDialog(String message) {
-    showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text(message),
-        actions: [
-          TextButton(
-            child: const Text('OK'),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      ),
-    );
-  }
+  // void _showDialog(String message) {
+  //   showDialog<void>(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title: Text(message),
+  //       actions: [
+  //         TextButton(
+  //           child: const Text('OK'),
+  //           onPressed: () => Navigator.of(context).pop(),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
