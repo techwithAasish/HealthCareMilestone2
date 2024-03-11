@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 );
               },
-              child: const Text('Patient Clinical Info'),
+              child: const Text('Patient Medical Info'),
             ),
           ],
         ),
@@ -68,7 +68,7 @@ class PatientRecordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Patient Record'),
+        title: const Text('Add Patient Info'),
       ),
       body: Center(
         child: Column(
@@ -82,7 +82,7 @@ class PatientRecordScreen extends StatelessWidget {
                       builder: (context) => const AddPatientRecord()),
                 );
               },
-              child: const Text('Add Patient Record'),
+              child: const Text('Add Patient Info'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -94,7 +94,7 @@ class PatientRecordScreen extends StatelessWidget {
                 );
                 // Add functionality to update patient record
               },
-              child: const Text('Update Patient Record'),
+              child: const Text('Update Patient Info'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -105,7 +105,7 @@ class PatientRecordScreen extends StatelessWidget {
                       builder: (context) => PatientInfoTableScreen()),
                 );
               },
-              child: const Text('View Patient Record'),
+              child: const Text('View Patient Info'),
             ),
           ],
         ),
@@ -121,7 +121,7 @@ class ClinicalDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add Clinical Data'),
+        title: const Text('Add Medical Data'),
       ),
       body: Center(
         child: Column(
@@ -135,7 +135,7 @@ class ClinicalDataScreen extends StatelessWidget {
                       builder: (context) => const AddClinicalRecord()),
                 );
               },
-              child: const Text('Add Patient Clinical Record'),
+              child: const Text('Add Patient Medical Data'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -146,7 +146,7 @@ class ClinicalDataScreen extends StatelessWidget {
                       builder: (context) => const UpdateClinicalRecord()),
                 );
               },
-              child: const Text('Update Patient Clinical Record'),
+              child: const Text('Update Patient Medical Data'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
@@ -156,7 +156,7 @@ class ClinicalDataScreen extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => ViewClinicalRecord()),
                 );
               },
-              child: const Text('View Patient Clinical Record'),
+              child: const Text('View Patient Medical Data'),
             ),
           ],
         ),
