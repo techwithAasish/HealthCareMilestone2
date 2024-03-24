@@ -1,50 +1,52 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class PatientInfoTableScreen extends StatelessWidget {
-  // Replace this data with actual patient information
-  final List<Map<String, dynamic>> patientData = [
-    {
-      'id': 1,
-      'first_name': 'John',
-      'last_name': 'Doe',
-      'dob': '13/09/2000',
-      'gender': 'Male',
-      'phone_number': '4371234545',
-      'email_address': 'doe@gmail.com',
-      'address': '45 Progress AVe'
-    },
-    {
-      'id': 2,
-      'first_name': 'Abhishek',
-      'last_name': 'Rijal',
-      'dob': '13/09/1996',
-      'gender': 'Male',
-      'phone_number': '4371234512',
-      'email_address': 'abhishek@gmail.com',
-      'address': '45 Kennedy road'
-    },
-    {
-      'id': 1,
-      'first_name': 'Anjali',
-      'last_name': 'Thapa',
-      'dob': '13/09/2001',
-      'gender': 'Female',
-      'phone_number': '4371234544',
-      'email_address': 'anajli@gmail.com',
-      'address': '45 Scarborough'
-    },
-    {
-      'id': 3,
-      'first_name': 'Aasish',
-      'last_name': 'Mahato',
-      'dob': '13/09/1999',
-      'gender': 'Male',
-      'phone_number': '4371234534',
-      'email_address': 'aasi@gmail.com',
-      'address': '1002 Progress AVe'
-    },
-    // Add more patient data as needed
-  ];
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class PatientInfoTableScreen extends StatefulWidget {
+  const PatientInfoTableScreen({Key? key}) : super(key: key);
+
+  @override
+  _PatientInfoTableScreenState createState() => _PatientInfoTableScreenState();
+}
+
+class _PatientInfoTableScreenState extends State<PatientInfoTableScreen> {
+  List<Map<String, dynamic>> patientData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch patient data when the widget initializes
+    fetchPatientData();
+  }
+
+  Future<void> fetchPatientData() async {
+    try {
+      // Make GET request to fetch patient data
+      final response =
+          await http.get(Uri.parse('http://localhost:3000/patients'));
+
+      if (response.statusCode == 200) {
+        // If request is successful, decode JSON response
+        final List<dynamic> jsonData = json.decode(response.body);
+
+        setState(() {
+          // Update patientData list with received data
+          patientData = jsonData
+              .map((patient) => Map<String, dynamic>.from(patient))
+              .toList();
+        });
+
+        print(patientData);
+      } else {
+        // Handle error if request fails
+        throw Exception('Failed to load patient data');
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('Exception: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,15 +70,25 @@ class PatientInfoTableScreen extends StatelessWidget {
           rows: patientData.map((patient) {
             return DataRow(
               cells: [
-                DataCell(Text(patient['id'].toString())),
+                DataCell(Text(patient['_id'].toString())),
                 DataCell(Text(patient['first_name'])),
                 DataCell(Text(patient['last_name'])),
-                DataCell(Text(patient['dob'])),
+                DataCell(Text(patient['date_of_birth'])),
                 DataCell(Text(patient['gender'])),
-                DataCell(Text(patient['phone_number'])),
+                DataCell(Text(patient['phoneNumber'])),
                 DataCell(Text(patient['email_address'])),
                 DataCell(Text(patient['address'])),
               ],
+              // cells: [
+              //   DataCell(Text(patientData['id'])),
+              //   DataCell(Text(patient['first_name'])),
+              //   DataCell(Text(patient['last_name'])),
+              //   DataCell(Text(patient['dob'])),
+              //   DataCell(Text(patient['gender'])),
+              //   DataCell(Text(patient['phone_number'])),
+              //   DataCell(Text(patient['email_address'])),
+              //   DataCell(Text(patient['address'])),
+              // ],
             );
           }).toList(),
         ),

@@ -1,9 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:milestone2/screens/homeScreen.dart';
 
 class Patient {
   String firstName = '';
   String lastName = '';
-  DateTime? dateOfBirth;
+  String dateOfBirth = '';
   String gender = '';
   String phoneNumber = '';
   String emailAddress = '';
@@ -20,6 +24,9 @@ class AddPatientRecord extends StatefulWidget {
 class _AddPatientRecordState extends State<AddPatientRecord> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
+
+  // final String apiUrl = 'https://patient-backend-krc3.onrender.com/patients';
+  final String apiUrl = 'http://localhost:3000/patients';
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +75,7 @@ class _AddPatientRecordState extends State<AddPatientRecord> {
                   return null;
                 },
                 onSaved: (value) {
-                  _patient.dateOfBirth = DateTime.parse(value!);
+                  _patient.dateOfBirth = value!;
                 },
               ),
               TextFormField(
@@ -122,18 +129,19 @@ class _AddPatientRecordState extends State<AddPatientRecord> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
+                  // onPressed: _postData,
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       // You can add logic here to save the patient record
                       // For now, let's print the patient information
-                      print(_patient.firstName);
-                      print(_patient.lastName);
-                      print(_patient.dateOfBirth);
-                      print(_patient.gender);
-                      print(_patient.phoneNumber);
-                      print(_patient.emailAddress);
-                      print(_patient.address);
+                      _postData();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
                     }
                   },
                   child: const Text('Submit'),
@@ -144,5 +152,45 @@ class _AddPatientRecordState extends State<AddPatientRecord> {
         ),
       ),
     );
+  }
+
+  // adding patient info
+  Future<void> _postData() async {
+    try {
+      final response = await http.post(
+        // Uri.parse('http://localhost:3000/patients'),
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        // headers: {
+        //   "Access-Control-Allow-Origin": "*",
+        //   'Content-Type': 'application/json',
+        //   'Accept': '*/*'
+        // },
+        body: jsonEncode(<String, dynamic>{
+          'first_name': _patient.firstName,
+          'last_name': _patient.lastName,
+          'date_of_birth': _patient.dateOfBirth,
+          'gender': _patient.gender,
+          'phoneNumber': _patient.phoneNumber,
+          'email_address': _patient.emailAddress,
+          'address': _patient.address,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Successful POST request, handle the response here
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        print(_patient.firstName);
+      } else {
+        // If the server returns an error response, throw an exception
+        throw Exception('Failed to post data');
+      }
+    } catch (e) {
+      print("excepion");
+      print(e);
+    }
   }
 }
