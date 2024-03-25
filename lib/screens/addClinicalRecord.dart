@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Patient {
   String patientID = '';
@@ -7,6 +10,7 @@ class Patient {
   String respiratoryRate = '';
   String bloodOxygenLevel = '';
   String heartbeatRate = '';
+  String conditionCritical = '';
 }
 
 class AddClinicalRecord extends StatefulWidget {
@@ -19,6 +23,9 @@ class AddClinicalRecord extends StatefulWidget {
 class _AddPatientRecordState extends State<AddClinicalRecord> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
+
+  final String apiUrl =
+      'http://localhost:3000/patients/66006da228881bbe7c8a1678/tests';
 
   @override
   Widget build(BuildContext context) {
@@ -107,22 +114,35 @@ class _AddPatientRecordState extends State<AddClinicalRecord> {
                   _patient.heartbeatRate = value!;
                 },
               ),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Critical Condition'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter the critical condition';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _patient.conditionCritical = value!;
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
-                    // if (_formKey.currentState!.validate()) {
-                    //   _formKey.currentState!.save();
-                    //   // You can add logic here to save the patient record
-                    //   // For now, let's print the patient information
-                    //   print(_patient.firstName);
-                    //   print(_patient.lastName);
-                    //   print(_patient.dateOfBirth);
-                    //   print(_patient.gender);
-                    //   print(_patient.phoneNumber);
-                    //   print(_patient.emailAddress);
-                    //   print(_patient.address);
-                    // }
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      // You can add logic here to save the patient record
+                      // For now, let's print the patient information
+                      _postClinicalData();
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const HomeScreen(),
+                      //   ),
+                      // );
+                    }
                   },
                   child: const Text('Submit'),
                 ),
@@ -132,5 +152,45 @@ class _AddPatientRecordState extends State<AddClinicalRecord> {
         ),
       ),
     );
+  }
+
+  // adding patient test info
+  Future<void> _postClinicalData() async {
+    try {
+      final response = await http.post(
+        // Uri.parse('http://localhost:3000/patients'),
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        // headers: {
+        //   "Access-Control-Allow-Origin": "*",
+        //   'Content-Type': 'application/json',
+        //   'Accept': '*/*'
+        // },
+        body: jsonEncode(<String, dynamic>{
+          'patientId': _patient.patientID,
+          'date': _patient.date,
+          'bloodPressure': _patient.bloodPressure,
+          'respiratoryRate': _patient.respiratoryRate,
+          'bloodOxygenLevel': _patient.bloodOxygenLevel,
+          'heartbeatRate': _patient.heartbeatRate,
+          'condition_critical': _patient.conditionCritical,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Successful POST request, handle the response here
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        print(_patient.patientID);
+      } else {
+        // If the server returns an error response, throw an exception
+        throw Exception('Failed to post data');
+      }
+    } catch (e) {
+      print("excepion");
+      print(e);
+    }
   }
 }
