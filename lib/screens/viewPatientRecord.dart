@@ -17,10 +17,10 @@ class _PatientInfoTableScreenState extends State<PatientInfoTableScreen> {
   void initState() {
     super.initState();
     // Fetch patient data when the widget initializes
-    fetchPatientData();
+    fetchPatientInfo();
   }
 
-  Future<void> fetchPatientData() async {
+  Future<void> fetchPatientInfo() async {
     try {
       // Make GET request to fetch patient data
       final response =
@@ -79,16 +79,6 @@ class _PatientInfoTableScreenState extends State<PatientInfoTableScreen> {
                 DataCell(Text(patient['email_address'])),
                 DataCell(Text(patient['address'])),
               ],
-              // cells: [
-              //   DataCell(Text(patientData['id'])),
-              //   DataCell(Text(patient['first_name'])),
-              //   DataCell(Text(patient['last_name'])),
-              //   DataCell(Text(patient['dob'])),
-              //   DataCell(Text(patient['gender'])),
-              //   DataCell(Text(patient['phone_number'])),
-              //   DataCell(Text(patient['email_address'])),
-              //   DataCell(Text(patient['address'])),
-              // ],
             );
           }).toList(),
         ),
