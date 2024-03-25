@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:json_annotation/json_annotation.dart';
 // import 'package:milestone2/screens/addPatientRecord.dart';
 import 'package:milestone2/screens/homeScreen.dart';
+import 'package:milestone2/screens/signupPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -92,7 +93,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                     },
                   ),
                   TextButton(
-                    child: const Text('Sign in'),
+                    child: const Text('Sign In'),
                     onPressed: () async {
                       // Use a JSON encoded string to send
                       // var result = await widget.httpClient!
@@ -111,6 +112,23 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                             builder: (context) => const HomeScreen()),
                       );
                     },
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text("Don't have an account?"),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => RegisterScreen(),
+                            ),
+                          );
+                        },
+                        child: const Text('Sign Up'),
+                      ),
+                    ],
                   ),
                 ].expand(
                   (widget) => [
