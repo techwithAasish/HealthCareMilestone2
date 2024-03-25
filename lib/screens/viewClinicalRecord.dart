@@ -1,42 +1,52 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
-class ViewClinicalRecord extends StatelessWidget {
-  // Replace this data with actual patient information
-  final List<Map<String, dynamic>> patientData = [
-    {
-      'id': 1,
-      'date': '3/10/2022',
-      'blood_pressure': '90/60',
-      'respiratory_rate': '70',
-      'blood_oxygen_level': '95%',
-      'heartbeat_rate': '60',
-    },
-    {
-      'id': 2,
-      'date': '3/10/2020',
-      'blood_pressure': '96/65',
-      'respiratory_rate': '90',
-      'blood_oxygen_level': '100%',
-      'heartbeat_rate': '80',
-    },
-    {
-      'id': 3,
-      'date': '3/10/2021',
-      'blood_pressure': '99/50',
-      'respiratory_rate': '80',
-      'blood_oxygen_level': '88%',
-      'heartbeat_rate': '70',
-    },
-    {
-      'id': 4,
-      'date': '3/10/2019',
-      'blood_pressure': '91/61',
-      'respiratory_rate': '77',
-      'blood_oxygen_level': '101%',
-      'heartbeat_rate': '66',
-    },
-    // Add more patient data as needed
-  ];
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class ViewClinicalRecord extends StatefulWidget {
+  const ViewClinicalRecord({Key? key}) : super(key: key);
+
+  @override
+  _ViewClinicalRecord createState() => _ViewClinicalRecord();
+}
+
+class _ViewClinicalRecord extends State<ViewClinicalRecord> {
+  List<Map<String, dynamic>> patientClinicalData = [];
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch patient data when the widget initializes
+    fetchPatientClinicalInfo();
+  }
+
+  Future<void> fetchPatientClinicalInfo() async {
+    try {
+      // Make GET request to fetch patient data
+      final response =
+          await http.get(Uri.parse('http://localhost:3000/patients/tests'));
+
+      if (response.statusCode == 200) {
+        // If request is successful, decode JSON response
+        final List<dynamic> jsonData = json.decode(response.body);
+
+        setState(() {
+          // Update patientData list with received data
+          patientClinicalData = jsonData
+              .map((patient) => Map<String, dynamic>.from(patient))
+              .toList();
+        });
+
+        print(patientClinicalData);
+      } else {
+        // Handle error if request fails
+        throw Exception('Failed to load patient data');
+      }
+    } catch (e) {
+      // Handle any exceptions
+      print('Exception: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -54,16 +64,18 @@ class ViewClinicalRecord extends StatelessWidget {
             DataColumn(label: Text('Respiratory Rate')),
             DataColumn(label: Text('Blood Oxygen Level')),
             DataColumn(label: Text('Heart Rate')),
+            DataColumn(label: Text('Critical Condition')),
           ],
-          rows: patientData.map((patient) {
+          rows: patientClinicalData.map((patient) {
             return DataRow(
               cells: [
-                DataCell(Text(patient['id'].toString())),
+                DataCell(Text(patient['_id'].toString())),
                 DataCell(Text(patient['date'])),
-                DataCell(Text(patient['blood_pressure'])),
-                DataCell(Text(patient['respiratory_rate'])),
-                DataCell(Text(patient['blood_oxygen_level'])),
-                DataCell(Text(patient['heartbeat_rate'])),
+                DataCell(Text(patient['bloodPressure'])),
+                DataCell(Text(patient['respiratoryRate'])),
+                DataCell(Text(patient['bloodOxygenLevel'])),
+                DataCell(Text(patient['heartbeatRate'])),
+                DataCell(Text(patient['condition_critical'])),
               ],
             );
           }).toList(),
