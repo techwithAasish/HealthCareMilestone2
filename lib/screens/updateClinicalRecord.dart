@@ -37,7 +37,7 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
                 decoration: const InputDecoration(labelText: 'Patient ID'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the patient id';
+                    return 'Please enter patient id';
                   }
                   return null;
                 },
@@ -49,7 +49,7 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
                 decoration: const InputDecoration(labelText: 'Date'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the Date';
+                    return 'Please enter Date';
                   }
                   return null;
                 },
@@ -61,7 +61,7 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
                 decoration: const InputDecoration(labelText: 'Blood Pressure'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the blood pressure';
+                    return 'Please enter blood pressure';
                   }
                   return null;
                 },
@@ -75,7 +75,7 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
                 validator: (value) {
                   // You can add more sophisticated date validation if needed
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the date of birth';
+                    return 'Please enter date of birth';
                   }
                   return null;
                 },
@@ -85,10 +85,10 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
               ),
               TextFormField(
                 decoration:
-                    const InputDecoration(labelText: 'Blood OXygen Level'),
+                    const InputDecoration(labelText: 'Blood Oxygen Level'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the blood oxygen level';
+                    return 'Please enter blood oxygen level';
                   }
                   return null;
                 },
@@ -100,7 +100,7 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
                 decoration: const InputDecoration(labelText: 'Heartbeat Rate'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the heartbeat rate';
+                    return 'Please enter heartbeat rate';
                   }
                   return null;
                 },

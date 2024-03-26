@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Milestone 2',
+        title: 'Milestone 3',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
@@ -61,7 +61,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign in Form'),
+        title: const Text('Sign In Page'),
       ),
       body: Form(
         child: Scrollbar(
@@ -75,7 +75,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                     textInputAction: TextInputAction.next,
                     decoration: const InputDecoration(
                       filled: true,
-                      hintText: 'Your email address',
+                      hintText: 'Email address',
                       labelText: 'Email',
                     ),
                     onChanged: (value) {
