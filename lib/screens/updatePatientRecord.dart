@@ -39,7 +39,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 decoration: const InputDecoration(labelText: 'Patient ID'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the patient id';
+                    return 'Please enter patient id';
                   }
                   return null;
                 },
@@ -51,7 +51,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 decoration: const InputDecoration(labelText: 'First Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the first name';
+                    return 'Please enter first name';
                   }
                   return null;
                 },
@@ -63,7 +63,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 decoration: const InputDecoration(labelText: 'Last Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the last name';
+                    return 'Please enter last name';
                   }
                   return null;
                 },
@@ -76,7 +76,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 validator: (value) {
                   // You can add more sophisticated date validation if needed
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the date of birth';
+                    return 'Please enter date of birth';
                   }
                   return null;
                 },
@@ -88,7 +88,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 decoration: const InputDecoration(labelText: 'Gender'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the gender';
+                    return 'Please enter gender';
                   }
                   return null;
                 },
@@ -100,7 +100,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 decoration: const InputDecoration(labelText: 'Phone Number'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the phone number';
+                    return 'Please enter phone number';
                   }
                   return null;
                 },
@@ -112,7 +112,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 decoration: const InputDecoration(labelText: 'Email Address'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the email address';
+                    return 'Please enter email address';
                   }
                   return null;
                 },
@@ -124,7 +124,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                 decoration: const InputDecoration(labelText: 'Address'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
-                    return 'Please enter the address';
+                    return 'Please enter address';
                   }
                   return null;
                 },
