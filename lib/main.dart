@@ -92,7 +92,7 @@ class _SignInHttpDemoState extends State<SignInHttpDemo> {
                       formData.password = value;
                     },
                   ),
-                  TextButton(
+                  ElevatedButton(
                     child: const Text('Sign In'),
                     onPressed: () async {
                       // Use a JSON encoded string to send

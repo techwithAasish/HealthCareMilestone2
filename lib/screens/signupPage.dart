@@ -23,6 +23,7 @@ class RegisterScreen extends StatelessWidget {
             children: [
               TextFormField(
                 decoration: const InputDecoration(
+                  filled: true,
                   labelText: 'Email',
                 ),
                 keyboardType: TextInputType.emailAddress,
@@ -40,6 +41,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 20),
               TextFormField(
                 decoration: const InputDecoration(
+                  filled: true,
                   labelText: 'Password',
                 ),
                 obscureText: true,
@@ -55,6 +57,7 @@ class RegisterScreen extends StatelessWidget {
               const SizedBox(height: 20),
               TextFormField(
                 decoration: const InputDecoration(
+                  filled: true,
                   labelText: 'Confirm Password',
                 ),
                 obscureText: true,
