@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:milestone2/screens/homeScreen.dart';
 
 class Patient {
   String patientID = '';
@@ -136,12 +137,12 @@ class _AddPatientRecordState extends State<AddClinicalRecord> {
                       // You can add logic here to save the patient record
                       // For now, let's print the patient information
                       _postClinicalData();
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const HomeScreen(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
                     }
                   },
                   child: const Text('Submit'),
