@@ -1,10 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Patient {
-  String patientID = '';
   String firstName = '';
   String lastName = '';
-  DateTime? dateOfBirth;
+  String dateOfBirth = '';
   String gender = '';
   String phoneNumber = '';
   String emailAddress = '';
@@ -21,6 +23,9 @@ class UpdatePatientRecord extends StatefulWidget {
 class _AddPatientRecordState extends State<UpdatePatientRecord> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
+
+  final String apiUrl =
+      'http://localhost:3000/patients/6602296d32ef883fdf84e862';
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +86,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                   return null;
                 },
                 onSaved: (value) {
-                  _patient.dateOfBirth = DateTime.parse(value!);
+                  _patient.dateOfBirth = value!;
                 },
               ),
               TextFormField(
@@ -138,15 +143,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      // You can add logic here to save the patient record
-                      // For now, let's print the patient information
-                      print(_patient.firstName);
-                      print(_patient.lastName);
-                      print(_patient.dateOfBirth);
-                      print(_patient.gender);
-                      print(_patient.phoneNumber);
-                      print(_patient.emailAddress);
-                      print(_patient.address);
+                      _updateData();
                     }
                   },
                   child: const Text('Update'),
@@ -157,5 +154,41 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
         ),
       ),
     );
+  }
+
+  // update patient info
+  Future<void> _updateData() async {
+    try {
+      final response = await http.put(
+        // Uri.parse('http://0.0.0.0:3000/patients/6602296d32ef883fdf84e862'),
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+
+        body: jsonEncode(<String, dynamic>{
+          'first_name': _patient.firstName,
+          'last_name': _patient.lastName,
+          'address': _patient.address,
+          'date_of_birth': _patient.dateOfBirth,
+          'gender': _patient.gender,
+          'phoneNumber': _patient.phoneNumber,
+          'email_address': _patient.emailAddress,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Successful POST request, handle the response here
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        print(_patient.firstName);
+      } else {
+        // If the server returns an error response, throw an exception
+        throw Exception('Failed to post data');
+      }
+    } catch (e) {
+      print("excepion");
+      print(e);
+    }
   }
 }

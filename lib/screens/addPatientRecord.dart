@@ -171,11 +171,11 @@ class _AddPatientRecordState extends State<AddPatientRecord> {
         body: jsonEncode(<String, dynamic>{
           'first_name': _patient.firstName,
           'last_name': _patient.lastName,
+          'address': _patient.address,
           'date_of_birth': _patient.dateOfBirth,
           'gender': _patient.gender,
           'phoneNumber': _patient.phoneNumber,
           'email_address': _patient.emailAddress,
-          'address': _patient.address,
         }),
       );
 
