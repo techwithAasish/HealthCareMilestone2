@@ -32,7 +32,7 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Update Patient Record'),
+        title: const Text('Update Patient Information'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
