@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "406631506003",
+    "project_id": "healthapp-58c02",
+    "storage_bucket": "healthapp-58c02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:406631506003:android:66ec29ec3b516c12b7a6a6",
+        "android_client_info": {
+          "package_name": "com.example.milestone2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNFRneossn90IdOl4WeKkfNFf8FTifAnE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

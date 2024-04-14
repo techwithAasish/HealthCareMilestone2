@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:milestone2/screens/homeScreen.dart';
 
 class Patient {
   String firstName = '';
@@ -144,6 +145,12 @@ class _AddPatientRecordState extends State<UpdatePatientRecord> {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
                       _updateData();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const HomeScreen(),
+                        ),
+                      );
                     }
                   },
                   child: const Text('Update'),

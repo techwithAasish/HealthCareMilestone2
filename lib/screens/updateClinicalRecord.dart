@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class Patient {
-  String patientID = '';
+  String patientId = '';
   String date = '';
   String bloodPressure = '';
   String respiratoryRate = '';
   String bloodOxygenLevel = '';
   String heartbeatRate = '';
+  String conditionCritical = '';
 }
 
 class UpdateClinicalRecord extends StatefulWidget {
@@ -19,6 +22,9 @@ class UpdateClinicalRecord extends StatefulWidget {
 class _AddPatientRecordState extends State<UpdateClinicalRecord> {
   final _formKey = GlobalKey<FormState>();
   final Patient _patient = Patient();
+
+  final String apiUrl =
+      'http://0.0.0.0:3000/patients/tests/660217aff086b7f0e313eb97';
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +48,7 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
                   return null;
                 },
                 onSaved: (value) {
-                  _patient.patientID = value!;
+                  _patient.patientId = value!;
                 },
               ),
               TextFormField(
@@ -108,14 +114,26 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
                   _patient.heartbeatRate = value!;
                 },
               ),
+              TextFormField(
+                decoration:
+                    const InputDecoration(labelText: 'Critical Condition'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter critical condition';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _patient.conditionCritical = value!;
+                },
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save();
-                      // You can add logic here to save the patient record
-                      // For now, let's print the patient information
+                      _updateData();
                     }
                   },
                   child: const Text('Update'),
@@ -126,5 +144,41 @@ class _AddPatientRecordState extends State<UpdateClinicalRecord> {
         ),
       ),
     );
+  }
+
+  // update patient info
+  Future<void> _updateData() async {
+    try {
+      final response = await http.put(
+        // Uri.parse('http://0.0.0.0:3000/patients/6602296d32ef883fdf84e862'),
+        Uri.parse(apiUrl),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+
+        body: jsonEncode(<String, dynamic>{
+          'patientId': _patient.patientId,
+          'date': _patient.date,
+          'bloodPressure': _patient.bloodPressure,
+          'respiratoryRate': _patient.respiratoryRate,
+          'bloodOxygenLevel': _patient.bloodOxygenLevel,
+          'heartbeatRate': _patient.heartbeatRate,
+          'condition_critical': _patient.conditionCritical,
+        }),
+      );
+
+      if (response.statusCode == 201) {
+        // Successful POST request, handle the response here
+        final responseData = jsonDecode(response.body);
+        print(responseData);
+        // print(_patient.firstName);
+      } else {
+        // If the server returns an error response, throw an exception
+        throw Exception('Failed to post data');
+      }
+    } catch (e) {
+      print("excepion");
+      print(e);
+    }
   }
 }
